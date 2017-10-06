@@ -209,7 +209,7 @@
         {{ } }}
         </div>
 
-        <div class="menuHeader"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Coins</div>
+        <div class="menuHeader"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;<span>Crypto Coins</span></div>
         <div class="menuList" id="coinList">
             {{ for(var pool in it.poolsConfigs) {
                 var info = JSON.stringify({
@@ -219,7 +219,7 @@
                     host: it.portalConfig.website.stratumHost
                 }).replace(/"/g, '&quot;');
             }}
-            <a href="#" class="poolOption" data-info="{{=info}}">{{=pool}}</a>
+            <a href="#" class="poolOption" data-info="{{=info}}"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;&nbsp;{{=pool}}</a>
             {{ } }}
         </div>
     </div>
