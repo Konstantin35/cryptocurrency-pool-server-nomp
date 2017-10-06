@@ -13,7 +13,7 @@
     }
 
     #menu{
-        background-color: #3d3d3d;
+        background-color: #616161;
         min-width: 170px;
     }
 
@@ -22,6 +22,8 @@
         border-bottom: 1px solid #7f878b;
         font-size: 1.2em;
         padding: 16px 16px 4px 15px;
+        text-align: center;
+        font-weight: bold;
     }
 
     .menuList{
@@ -61,17 +63,11 @@
         justify-content: center;
         align-items: center;
         text-decoration: none;
+        background-color: #212121;
     }
 
     a.miningOption:hover{
         color: #f69b3a;
-    }
-
-    .miningOption:first-child{
-        background-color: #0eafc7;
-    }
-    .miningOption:last-child{
-        background-color: #b064e1;
     }
     .miningOptionNum{
         font-size: 6em;
@@ -178,6 +174,8 @@
     #coinInfoClose:hover{
         color: #50f0e3;
     }
+
+      .blueicon {color: #61A8DC}
 </style>
 
 <div id="holder">
@@ -211,7 +209,7 @@
         {{ } }}
         </div>
 
-        <div class="menuHeader">Coins</div>
+        <div class="menuHeader"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Coins</div>
         <div class="menuList" id="coinList">
             {{ for(var pool in it.poolsConfigs) {
                 var info = JSON.stringify({
@@ -227,19 +225,8 @@
     </div>
 
     <div id="main">
-        <a href="#" class="miningOption" id="nompAppDownload">
-            <div class="miningOptionNum">1.</div>
-            <div class="miningOptionInstructions">
-                <div>Download NOMP App</div>
-                <div>Our preconfigured app makes mining that easy</div>
-            </div>
-        </a>
-        <div id="orHolder">
-            <div id="orLine"></div>
-            <div id="orText">or</div>
-        </div>
         <a href="#" class="miningOption" id="coinGlowTrigger">
-            <div class="miningOptionNum">2.</div>
+            <div class="miningOptionNum"><i class="fa fa-arrow-circle-right blueicon" aria-hidden="true"></i></div>
             <div class="miningOptionInstructions">
                 <div>Select a coin for connection details</div>
                 <div>Configurations for each coin are available for advanced miners</div>
@@ -310,9 +297,4 @@
         return false;
     });
 
-    $('#nompAppDownload').click(function(event){
-        event.preventDefault();
-        alert('NOMP App development still in progress...');
-        return false;
-    });
 </script>
