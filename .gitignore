@@ -1,4 +1,5 @@
 node_modules/
+npm-shrinkwrap.json
 .idea/
 pool_configs/*.json
 !pool_configs/litecoin_example.json

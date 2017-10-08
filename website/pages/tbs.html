@@ -1,38 +1,32 @@
 <style>
-
-    #topCharts {
-        padding: 18px;
-    }
-
-    #topCharts > div > div > svg {
-        display: block;
-        height: 280px;
-    }
-
-    .chartWrapper {
-        border: solid 1px #c7c7c7;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 18px;
-    }
-
-    .chartLabel {
-        font-size: 1.2em;
-        text-align: center;
-        padding: 4px;
-    }
-
-    .chartHolder {
-
-    }
+  .wrapper {
+    color: white;
+    margin: 18px;
+  }
 
     table {
         width: 100%;
     }
 
-</style>
+    .pure-table {
+      border: #616161;
+    }
 
-<table class="pure-table">
+    .pure-table thead {
+      border: #616161;
+      background-color: #212121;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .pure-table-even {
+      background-color: #9E9E9E;
+    }
+
+</style>
+<div class="wrapper">
+<table class="pure-table pure-table-bordered">
     <thead>
     <tr>
         <th>Pool</th>
@@ -47,8 +41,9 @@
         <th>Hashrate</th>
     </tr>
     </thead>
+    <tbody>
     {{ for(var pool in it.stats.pools) { }}
-    <tr class="pure-table-odd">
+    <tr class="pure-table-even">
         <td>{{=it.stats.pools[pool].name}}</td>
         <td>{{=it.stats.pools[pool].algorithm}}</td>
         <td>{{=Object.keys(it.stats.pools[pool].workers).length}}</td>
@@ -61,4 +56,6 @@
         <td>{{=it.stats.pools[pool].hashrateString}}</td>
     </tr>
     {{ } }}
+  </tbody>
 </table>
+</div>

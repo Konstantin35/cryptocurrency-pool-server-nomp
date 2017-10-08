@@ -10,7 +10,7 @@
     }
 
     .chartWrapper {
-        border: solid 1px #c7c7c7;
+        border: solid 1px #616161;
         border-radius: 5px;
         padding: 5px;
         margin-bottom: 18px;
@@ -20,6 +20,11 @@
         font-size: 1.2em;
         text-align: center;
         padding: 4px;
+        font-weight: bold;
+    }
+
+    .chartLabel:first-letter {
+      text-transform: capitalize;
     }
 
     .chartHolder {
@@ -28,6 +33,22 @@
 
     table {
         width: 100%;
+    }
+
+    .pure-table {
+      border: #616161;
+    }
+
+    .pure-table thead {
+      border: #616161;
+      background-color: #212121;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .pure-table-even {
+      background-color: #9E9E9E;
     }
 
 </style>
@@ -40,7 +61,7 @@
     <div class="chartWrapper">
         <div class="chartLabel">{{=it.stats.pools[pool].name}}</div>
         <div class="chartHolder">
-            <table class="pure-table">
+            <table class="pure-table pure-table-bordered">
                 <thead>
                 <tr>
                     <th>Address</th>
@@ -52,7 +73,7 @@
                 </thead>
                 {{ for(var worker in it.stats.pools[pool].workers) { }}
                    {{var workerstat = it.stats.pools[pool].workers[worker];}}
-                    <tr class="pure-table-odd">
+                    <tr class="pure-table-even">
                         <td>{{=worker}}</td>
                         <td>{{=Math.floor(workerstat.shares)}}</td>
                         <td>{{=Math.floor(workerstat.invalidshares)}}</td>
