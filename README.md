@@ -537,14 +537,14 @@ Donations
 ---------
 To support development of this project feel free to donate :)
 
-* BTC: `1KRotMnQpxu3sePQnsVLRy3EraRFYfJQFR`
-* LTC: `LKfavSDJmwiFdcgaP1bbu46hhyiWw5oFhE`
+* BTC: `16JcDTRZsPgGsE2abDLTLApHAWhXUWb68Y`
+<!-- * LTC: `LKfavSDJmwiFdcgaP1bbu46hhyiWw5oFhE`
 * VTC: `VgW4uFTZcimMSvcnE4cwS3bjJ6P8bcTykN`
 * MAX: `mWexUXRCX5PWBmfh34p11wzS5WX2VWvTRT`
 * QRK: `QehPDAhzVQWPwDPQvmn7iT3PoFUGT7o8bC`
 * DRK: `XcQmhp8ANR7okWAuArcNFZ2bHSB81jpapQ`
 * DOGE: `DBGGVtwAAit1NPZpRm5Nz9VUFErcvVvHYW`
-* Cryptsy Trade Key: `254ca13444be14937b36c44ba29160bd8f02ff76`
+* Cryptsy Trade Key: `254ca13444be14937b36c44ba29160bd8f02ff76` -->
 
 Credits
 -------
@@ -559,7 +559,7 @@ Credits
 * [icecube45](//github.com/icecube45) - helping out with the repo wiki
 * [Fcases](//github.com/Fcases) - ordered me a pizza <3
 * Those that contributed to [node-stratum-pool](//github.com/zone117x/node-stratum-pool#credits)
-
+* [nosekefik](//github.com/nosekefik) - Added some mods, and new features and algos
 
 License
 -------

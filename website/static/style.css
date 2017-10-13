@@ -66,3 +66,15 @@ footer a{
 footer iframe{
     vertical-align: middle;
 }
+.telegram-link-icon{
+    color: #0088cc;  
+    font-size: 20px;  
+    vertical-align: top;
+    
+}
+.twitter-link-icon{
+    font-size: 20px;  
+    color: #00aced;
+    vertical-align: top;
+    
+}
