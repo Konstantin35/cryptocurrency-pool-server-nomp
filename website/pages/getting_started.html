@@ -14,7 +14,7 @@
 
     #menu{
         background-color: #3d3d3d;
-        min-width: 260px;
+        min-width: 230px;
     }
 
     #menu > .menuHeader{
@@ -229,12 +229,12 @@
             </div>
             <div id="coinInfoRows">
                 <div id="coinInfoRowKeys">
-                    <div>Username:</div>
-                    <div>Password:</div>
+                    <!-- <div>Username:</div>
+                    <div>Password:</div> -->
                 </div>
                 <div id="coinInfoRowValues">
-                    <div id="coinInfoUsername"></div>
-                    <div>anything</div>
+                    <!-- <div id="coinInfoUsername"></div>
+                    <div>anything</div> -->
                 </div>
             </div>
         </div>
@@ -283,7 +283,7 @@
 
         if (info.coin){
             $(".coinInfoName").text(info.coin.name[0].toUpperCase() + info.coin.name.slice(1));
-            $('#coinInfoUsername').text('your ' + info.coin.name + ' wallet address');
+            // $('#coinInfoUsername').text('your ' + info.coin.name + ' wallet address');
             $(".configText").addClass("hidden");
             if(info.coin.explorer!=null){
                 htmlKeys += '<div class="coinInfoData">Explorer:</div>';
