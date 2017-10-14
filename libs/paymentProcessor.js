@@ -402,7 +402,8 @@ function SetupForPool(logger, poolOptions, setupFinished) {
                         var toSend = (worker.balance + worker.reward) * (1 - withholdPercent);
                         if (toSend >= minPaymentSatoshis) {
                             totalSent += toSend;
-                            var address = worker.address = (worker.address || getProperAddress(w));
+                            var workerAddress = worker.address = (worker.address || getProperAddress(w.split('.')[0])).trim();
+                            var address = workerAddress.split('.')[0];
                             worker.sent = addressAmounts[address] = satoshisToCoins(toSend);
                             worker.balanceChange = Math.min(worker.balance, toSend) * -1;
                         }
@@ -428,6 +429,7 @@ function SetupForPool(logger, poolOptions, setupFinished) {
                         else if (result.error) {
                             logger.error(logSystem, logComponent, 'Error trying to send payments with RPC sendmany '
                                 + JSON.stringify(result.error));
+                               
                             callback(true);
                         }
                         else {
