@@ -209,7 +209,7 @@
                 var rewardRecipients =it.poolsConfigs[pool].rewardRecipients;
                 if(rewardRecipients!=null && rewardRecipients!=undefined){
                     for(var reward in rewardRecipients){
-                        fee+=rewardRecipients[reward];
+                        fee+=parseFloat(rewardRecipients[reward]);
                     }
                 }
                 var info = JSON.stringify({
