@@ -122,17 +122,15 @@
         display: flex;
         flex-direction: column;
         color: white;
-        width: 750px;
         min-height: 400px;
-        top: 50px;
-        left: 50%;
-        margin-left: -375px;
-        position: absolute;
         background-color: #f06350;
     }
-    #coinInfo .coinInfoName{
-        text-transform: capitalize;
+    #coinInfo a,#coinInfo a:visited{
+        color: white;
     }
+    /* #coinInfo .coinInfoName > span:first-letter{
+        text-transform: capitalize;
+    } */
     #coinInfo > div:first-of-type{
         font-size: 1.8em;
         text-align: center;
@@ -161,23 +159,12 @@
     #coinInfoRowKeys .coinInfoSubtle{
         font-weight: normal;
     }
-    #coinInfoRowValues{
+    .coinIcon{
+        width: 50px;
+        vertical-align: middle;
+    }
+ 
 
-    }
-    #coinInfoClose{
-        position: absolute;
-        font-size: 3em;
-        top: 0;
-        right: 0;
-        width: 60px;
-        height: 60px;
-        text-align: center;
-        color: white;
-        text-decoration: none;
-    }
-    #coinInfoClose:hover{
-        color: #50f0e3;
-    }
 </style>
 
 <div id="holder">
@@ -198,7 +185,7 @@
 
         <div class="menuList">
         {{ for (var p in it.portalConfig.switching){
-            if (!it.portalConfig.switching[p].enabled) continue;
+            if (!it.portalConfig.switching[p].enabled) continue;            
             var info = {
                 algo: p,
                 ports: {},
@@ -214,11 +201,19 @@
         <div class="menuHeader">Coins</div>
         <div class="menuList" id="coinList">
             {{ for(var pool in it.poolsConfigs) {
+                var fee=0;
+                var rewardRecipients =it.poolsConfigs[pool].rewardRecipients;
+                if(rewardRecipients!=null && rewardRecipients!=undefined){
+                    for(var reward in rewardRecipients){
+                        fee+=rewardRecipients[reward];
+                    }
+                }
                 var info = JSON.stringify({
                     coin: it.poolsConfigs[pool].coin,
                     algo: it.poolsConfigs[pool].coin.algorithm,
                     ports: it.poolsConfigs[pool].ports,
-                    host: it.portalConfig.website.stratumHost
+                    host: it.portalConfig.website.stratumHost,
+                    fee: fee,
                 }).replace(/"/g, '&quot;');
             }}
             <a href="#" class="poolOption" data-info="{{=info}}">{{=pool}}</a>
@@ -227,19 +222,23 @@
     </div>
 
     <div id="main">
-        <!-- <a href="#" class="miningOption" id="nompAppDownload">
-            <div class="miningOptionNum">1.</div>
-            <div class="miningOptionInstructions">
-                <div>Download NOMP App</div>
-                <div>Our preconfigured app makes mining that easy</div>
+        <div id="coinInfo" class="hidden">
+            <div>
+                <img class="coinIcon hidden"><img>
+                <span class="coinInfoName"></span>&nbsp;<span class="configText">Configuration:</span>
             </div>
-        </a>
-        <div id="orHolder">
-            <div id="orLine"></div>
-            <div id="orText">or</div>
-        </div> -->
+            <div id="coinInfoRows">
+                <div id="coinInfoRowKeys">
+                    <div>Username:</div>
+                    <div>Password:</div>
+                </div>
+                <div id="coinInfoRowValues">
+                    <div id="coinInfoUsername"></div>
+                    <div>anything</div>
+                </div>
+            </div>
+        </div>
         <a href="#" class="miningOption" id="coinGlowTrigger">
-            <!-- <div class="miningOptionNum">2.</div> -->
             <div class="miningOptionInstructions">
                 <div>Select a coin for connection details</div>
                 <div>Configurations for each coin are available for advanced miners</div>
@@ -248,43 +247,10 @@
     </div>
 </div>
 
-<a href="#" id="coinInfoBackground" class="hidden"></a>
 
-<div id="coinInfo" class="hidden">
-    <a href="#" id="coinInfoClose">×</a>
-    <div><span class="coinInfoName"></span> Configuration:</div>
-    <div id="coinInfoRows">
-        <div id="coinInfoRowKeys">
-            <div>Username:</div>
-            <div>Password:</div>
-        </div>
-        <div id="coinInfoRowValues">
-            <div id="coinInfoUsername"></div>
-            <div>anything</div>
-        </div>
-    </div>
-</div>
 
 <script>
 
-    function showCoinConfig(info){
-
-        var htmlKeys = '<div class="coinInfoData">Algorithm:</div>';
-        var htmlValues = '<div class="coinInfoData">' + info.algo + '</div>';
-
-        for (var port in info.ports){
-            htmlKeys += '<div class="coinInfoData">URL <span class="coinInfoSubtle">(difficulty ' + info.ports[port].diff + ')</span>:</div>';
-            htmlValues += '<div class="coinInfoData">stratum+tcp://' + info.host + ':' + port + '</div>';
-        }
-
-        if (info.coin)
-            $('#coinInfoUsername').text('your ' + info.coin.name + ' wallet address');
-        else
-            $('#coinInfoUsername').text('your public key');
-        $('.coinInfoData').remove();
-        $('#coinInfoRowKeys').append(htmlKeys);
-        $('#coinInfoRowValues').append(htmlValues);
-    }
 
     $('#coinGlowTrigger').click(function(event){
         event.preventDefault();
@@ -297,22 +263,55 @@
 
     $('.poolOption').click(function(event){
         event.preventDefault();
-        showCoinConfig($(this).data('info'));
-        $('#coinInfoBackground,#coinInfo').removeClass('hidden');
-        $('#coinInfoBackground').css('opacity', 0.7);
+        var info = $(this).data('info');
+        console.log(info);
+        
+        var htmlKeys = '<div class="coinInfoData">Algorithm:</div>';
+        var htmlValues = '<div class="coinInfoData">' + info.algo + '</div>';
+
+        for (var port in info.ports){
+            var portName="URL"
+            if(info.ports[port].name!=null)portName=info.ports[port].name;
+            htmlKeys += '<div class="coinInfoData">'+portName+' <span class="coinInfoSubtle">(diff ' + info.ports[port].diff + ')</span>:</div>';
+            htmlValues += '<div class="coinInfoData">stratum+tcp://' + info.host + ':' + port + '</div>';
+        }
+        if(info.fee!=null){
+            htmlKeys += '<div class="coinInfoData">Fee:</div>';
+            htmlValues += '<div class="coinInfoData">' + info.fee.toFixed(2) + ' %</div>';
+        }
+        
+
+        if (info.coin){
+            $(".coinInfoName").text(info.coin.name[0].toUpperCase() + info.coin.name.slice(1));
+            $('#coinInfoUsername').text('your ' + info.coin.name + ' wallet address');
+            $(".configText").addClass("hidden");
+            if(info.coin.explorer!=null){
+                htmlKeys += '<div class="coinInfoData">Explorer:</div>';
+                htmlValues += '<div class="coinInfoData"><a class="explorerLink" href="' + info.coin.explorer+ '">'+ info.coin.explorer+ '</a></div>';
+            }
+            if(info.coin.icon!=null){
+                $(".coinIcon").removeClass("hidden");
+                $(".coinIcon").attr("src",info.coin.icon);
+            }else{
+                $(".coinIcon").addClass("hidden");
+            }
+
+        }else{
+            $('#coinInfoUsername').text('your public key');
+            $(".configText").removeClass("hidden");
+        }
+
+        $('.coinInfoData').remove();
+        $('#coinGlowTrigger').remove();
+        $('#coinInfoRowKeys').append(htmlKeys);
+        $('#coinInfoRowValues').append(htmlValues);
+        $('#coinInfo').removeClass("hidden");
+
+
+
+
+
         return false;
     });
 
-    $('#coinInfoBackground,#coinInfoClose').click(function(event){
-        event.preventDefault();
-        $('#coinInfoBackground,#coinInfo').addClass('hidden');
-        $('#coinInfoBackground').css('opacity', 0.0);
-        return false;
-    });
-
-    $('#nompAppDownload').click(function(event){
-        event.preventDefault();
-        alert('NOMP App development still in progress...');
-        return false;
-    });
 </script>
