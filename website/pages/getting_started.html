@@ -42,7 +42,11 @@
     }
 
     .menuList > a:hover{
-        color: #f69b3a;
+        color: #f06350;
+    }
+    .menuList > a.active, .menuList > a.active:hover{
+        color: #e3f7ff;
+        background-color: #f06350;
     }
 
     #main{
@@ -264,7 +268,8 @@
     $('.poolOption').click(function(event){
         event.preventDefault();
         var info = $(this).data('info');
-        console.log(info);
+        $('.poolOption').removeClass("active");
+        $(this).addClass("active");
         
         var htmlKeys = '<div class="coinInfoData">Algorithm:</div>';
         var htmlValues = '<div class="coinInfoData">' + info.algo + '</div>';
