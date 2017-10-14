@@ -21,11 +21,6 @@
         text-align: center;
         padding: 4px;
     }
-
-    .chartHolder {
-
-    }
-
     table {
         width: 100%;
     }
@@ -35,8 +30,10 @@
 
 <div id="topCharts">
 
-{{ for(var pool in it.stats.pools) { }}
-
+{{ for(var pool in it.stats.pools) { 
+    var activeWorkers=0;
+}}
+{{  if(it.stats.pools[pool].workers.length>0){  }}
     <div class="chartWrapper">
         <div class="chartLabel">{{=it.stats.pools[pool].name}}</div>
         <div class="chartHolder">
@@ -50,7 +47,9 @@
                     <th>Hashrate</th>
                 </tr>
                 </thead>
-                {{ for(var worker in it.stats.pools[pool].workers) { }}
+                {{ for(var worker in it.stats.pools[pool].workers) {
+                    activeWorkers++;
+                 }}
                    {{var workerstat = it.stats.pools[pool].workers[worker];}}
                     <tr class="pure-table-odd">
                         <td>{{=worker}}</td>
@@ -64,3 +63,10 @@
         </div>
     </div>
 {{ } }}
+{{ } }}
+{{ if(activeWorkers==0){ }} 
+<div class="chartWrapper">
+    <div class="chartLabel">No workers running =(</div>
+</div>
+{{  } }}
+
