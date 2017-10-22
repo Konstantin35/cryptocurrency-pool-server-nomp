@@ -1,5 +1,7 @@
 {
     "name": "Monacoin",
     "symbol": "MONA",
-    "algorithm": "scrypt"
+    "algorithm": "lyra2rev2",
+    "icon":"http://files.coinmarketcap.com.s3-website-us-east-1.amazonaws.com/static/img/coins/200x200/monacoin.png",
+    "explorer":"https://bchain.info/MONA/"
 }

@@ -149,7 +149,7 @@ module.exports = function(logger){
                         }
                     }
                     else {
-                        pool.daemon.cmd('validateaddress', [workerName], function (results) {
+                        pool.daemon.cmd('validateaddress', [String(workerName).split(".")[0]], function (results) {
                             var isValid = results.filter(function (r) {
                                 if(typeof r.response == "undefined") {
                                   console.log("validateaddress failed:", r);
