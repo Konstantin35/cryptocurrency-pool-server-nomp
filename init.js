@@ -81,6 +81,10 @@ if (cluster.isWorker){
         case 'profitSwitch':
             new ProfitSwitch(logger);
             break;
+        case 'switchingPaymentProcessor':
+            var SwitchingPaymentProcessor = require('./libs/switchingPaymentProcessor.js');
+            new SwitchingPaymentProcessor(logger);
+            break;
     }
 
     return;
@@ -362,7 +366,21 @@ var processCoinSwitchCommand = function(params, options, reply){
 
 };
 
+var startSwitchingPaymentProcessor = function(){
+    if (!fs.existsSync('libs/switchingPaymentProcessor.js')) return;
 
+    var worker = cluster.fork({
+        workerType: 'switchingPaymentProcessor',
+        pools: JSON.stringify(poolConfigs),
+        portalConfig: JSON.stringify(portalConfig)
+    });
+    worker.on('exit', function(code, signal){
+        logger.error('Master', 'Switching Payment Processor', 'Died, spawning replacement...');
+        setTimeout(function(){
+            startSwitchingPaymentProcessor();
+        }, 2000);
+    });
+};
 
 var startPaymentProcessor = function(){
 
@@ -439,6 +457,8 @@ var startProfitSwitch = function(){
     spawnPoolWorkers();
 
     startPaymentProcessor();
+
+    startSwitchingPaymentProcessor();
 
     startWebsite();
 
